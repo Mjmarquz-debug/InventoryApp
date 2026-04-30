@@ -17,6 +17,3 @@ InventarioApp/
 - InventarioApp.csproj # Configuracion
 - .gitignore # Archivos ignorados por Git
 - src/
-
-## Progreso del curso
-- [x] Modulo 1: El ecosistema .NET
