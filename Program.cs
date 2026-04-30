@@ -1,19 +1,13 @@
-﻿// ============================================================
-// SISTEMA DE INVENTARIO - Clase 1.1
-// Estado: Mensaje de bienvenida
-// ============================================================
-using System.Reflection;
+﻿using System.Reflection;
 
 var assembly = Assembly.GetExecutingAssembly();
 var version = assembly.GetName().Version;
-var nombreDeUsuario = Environment.UserName();
 
-void MostrarBanner()
+void MostrarBanner(string nombreFinal)
 {
     Console.WriteLine("===============================================");
     Console.WriteLine("SISTEMA DE INVENTARIO");
     Console.WriteLine("===============================================");
-      Console.WriteLine("Hola {nombreDeUsuario}, bienvenido al sistema de inventario!");
 }
 
 void MostrarAyuda()
@@ -29,33 +23,58 @@ void MostrarAyuda()
     Console.WriteLine(" dotnet run -- --version");
 }
 
+int cantidadProductos = 0;
 
-
-int cantidadProductos = {Productos};
-decimal valorTotalInventario = {sumInventario};
-bool inventarioCargado = true;
-string nombreDelSistema = "Sistema de Inventario";
-
-Console.WriteLine($"Bienvenido al {nombreDelSistema}!");
-Console.WriteLine($"Ingrese nombre de usuario: {nombreDeUsuario}");
+Console.WriteLine($"Ingrese nombre de usuario:  ");
 string? nombreDeUsuarioInput = Console.ReadLine();
-Console.WriteLine($"Actualmente hay {cantidadProductos} productos en el inventario.");
-Console.WriteLine($"El valor total del inventario es: ${valorTotalInventario:N2}");
-Console.WriteLine($"Inventario cargado: {inventarioCargado ? "Sí" : "No"}");
 
-Console.Write("Ingrese una cantidad: ");
-string? cantidadInput = Console.ReadLine();
-if (int.TryParse(cantidadInput, out int cantidad))
+string nombreFinal = string.IsNullOrWhiteSpace(nombreDeUsuarioInput) 
+? "Usuario"
+: nombreDeUsuarioInput;
+
+Console.WriteLine($"Hola {nombreFinal}, bienvenido al sistema de inventario!");
+
+Console.WriteLine($"Actualmente hay {cantidadProductos} productos en el inventario.");
+
+Console.WriteLine("Quieres agregar productos al inventario? (s/n)");
+bool? respuestaInventario = Console.ReadLine()?.ToLower() == "si" ? true : false;
+
+if (respuestaInventario == true)
 {
-    Console.WriteLine($"Cantidad ingresada: {cantidad}");
-    cantidadProductos = cantidad;
+    Console.WriteLine("¡Genial! Vamos a agregar productos al inventario.");
+    Console.Write("Ingrese una cantidad: ");
+    string? cantidadInput = Console.ReadLine();
+        if (int.TryParse(cantidadInput, out int cantidad))
+            {
+            Console.WriteLine($"Cantidad ingresada: {cantidad}");
+            cantidadProductos = cantidad;
+            }
+            else
+            {
+                Console.WriteLine("Entrada no válida. Por favor ingrese un número entero.");
+            }
 }
 else
 {
-    Console.WriteLine("Entrada no válida. Por favor ingrese un número entero.");
+    Console.WriteLine("No hay problema. Puedes agregar productos más tarde.");
+
 }
 
-MostrarBanner();
+MostrarBanner(nombreFinal);
+
+
+Console.WriteLine();
+Console.WriteLine("Quieres ayuda? (s/n)");
+bool? respuestaAyuda = Console.ReadLine()?.ToLower() == "si" ? true : false;
+Console.WriteLine();
+if (respuestaAyuda == true)
+{
+    MostrarAyuda();
+}
+else
+{
+    Console.WriteLine("No hay problema. Puedes solicitar ayuda más tarde.");
+}
 
 
 Console.Write("Ingrese un comando o ingrese salir para terminar: ");
@@ -66,11 +85,3 @@ if (string.IsNullOrWhiteSpace(entrada) || entrada.ToLower() == "salir")
     Console.WriteLine("Saliendo del programa...");
     Environment.Exit(0);
 }
-
-Console.WriteLine();
-Console.WriteLine("Estado: Proyecto inicializado");
-Console.WriteLine("Configuracion .csproj");
-Console.WriteLine("Carpeta src/ creada");
-Console.WriteLine("Metadatos configurados");
-Console.WriteLine();
-Console.WriteLine("Agregar CLI y configuracion de repo GitHub");
